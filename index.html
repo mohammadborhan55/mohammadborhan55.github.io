@@ -331,6 +331,147 @@
       line-height: 1.6;
     }
 
+    /* ─── Interest Card — clickable ─────────────────────── */
+    .interest-card {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .interest-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+      border-left-color: var(--navy);
+    }
+    .interest-card .card-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.85rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .interest-card:hover .card-hint { opacity: 1; }
+
+    /* ─── Modal ──────────────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 50, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      max-width: 620px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      background: var(--navy);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .modal-header-text {}
+    .modal-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 0.35rem;
+    }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .modal-close {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 2px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+      line-height: 1;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.2); }
+
+    .modal-body {
+      padding: 2rem;
+    }
+    .modal-section {
+      margin-bottom: 1.75rem;
+    }
+    .modal-section:last-child { margin-bottom: 0; }
+    .modal-section-title {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .modal-section p {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      margin-bottom: 0.6rem;
+    }
+    .modal-section p:last-child { margin-bottom: 0; }
+    .modal-section strong { color: var(--navy); font-weight: 600; }
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .modal-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      letter-spacing: 0.04em;
+    }
+
     .research-direction {
       background: var(--bg-alt);
       border: 1px solid var(--rule);
@@ -681,11 +822,11 @@
   <!-- Stats strip -->
   <div class="hero-stats">
     <div class="stat-item">
-      <div class="stat-num">1</div>
-      <div class="stat-label">Published Paper</div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Published Papers</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">3</div>
+      <div class="stat-num">2</div>
       <div class="stat-label">Under Review</div>
     </div>
     <div class="stat-item">
@@ -740,21 +881,37 @@
   <h2 class="section-title">Research Interests</h2>
 
   <div class="research-grid fade-in">
-    <div class="interest-card">
+    <div class="interest-card" onclick="openModal('modal-1')">
       <h4>Perovskite Material Properties</h4>
       <p>Understanding the fundamental electronic, optical, and structural properties of perovskite compounds through DFT-based first-principles calculations, SCAPS-1D device simulation, microstructural analysis, and optoelectronic characterisation — building a bottom-up picture of what makes a perovskite material photovoltaically promising.</p>
+      <div class="card-hint">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Click to see my work
+      </div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card" onclick="openModal('modal-2')">
       <h4>Key Factors Governing Photovoltaic Performance</h4>
       <p>Investigating how intrinsic device parameters — defect density, carrier trap states, layer thickness, interface quality, and recombination pathways — determine the photovoltaic output metrics of perovskite cells. Identifying which factors have the highest leverage on efficiency and stability is central to my research approach.</p>
+      <div class="card-hint">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Click to see my work
+      </div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card" onclick="openModal('modal-3')">
       <h4>Device Architecture &amp; Parameter Optimization</h4>
       <p>Systematically optimising perovskite solar cell architectures by selecting and tuning electron transport layers (ETL), hole transport layers (HTL), and their interlayer interactions. Applying machine learning-assisted simulation to navigate the high-dimensional parameter space and maximise power conversion efficiency beyond what conventional sweeps can achieve.</p>
+      <div class="card-hint">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Click to see my work
+      </div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card" onclick="openModal('modal-4')">
       <h4>Scalability, Longevity &amp; Manufacturability</h4>
       <p>Addressing the critical gap between laboratory performance and real-world deployment — studying how fabrication techniques, working temperature, environmental stability, and encapsulation strategies affect device lifetime and manufacturing viability. My industrial engineering background gives me a grounded perspective on what scalability actually demands.</p>
+      <div class="card-hint">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Click to see my work
+      </div>
     </div>
   </div>
 
@@ -835,7 +992,7 @@
         <div class="project-title">Process Optimization of 58-Ton Induction Furnace Operations</div>
         <span class="project-badge badge-industry">Industry</span>
       </div>
-      <div class="project-meta">Jul 2023 – Present &nbsp;·&nbsp; Bangladesh Steel Re-Rolling Mills Ltd., Chattogram</div>
+      <div class="project-meta">Jul 2023 – Present &nbsp;·&nbsp; Bangladesh Steel Re-Rolling Mills Ltd., Chattogram &nbsp;·&nbsp; <em>Senior Production Engineer from July 2026</em></div>
       <p class="project-desc">Led systematic process optimization of a 58-ton induction furnace producing international-grade steel. Analyzed tap-to-tap cycle data to identify bottlenecks, implemented revised charge sequencing and temperature control protocols, and optimized ferroalloy addition schedules based on melt chemistry targets.</p>
       <p class="project-outcome">▶ Reduced tap-to-tap time by 2 minutes (8% production efficiency gain) and reduced ferroalloy consumption from 13 kg/ton to 10.5 kg/ton, yielding annual savings of approximately 3–4 crores BDT.</p>
       <div class="project-tags">
@@ -930,9 +1087,19 @@
       <div>
         <div class="pub-title">Modeling Microstructural and Mechanical Properties of Solidified Al-Sn-Cu System</div>
         <div class="pub-authors">[Co-authors], <strong>Mohammad Borhan Uddin</strong>, et al.</div>
-        <div class="pub-journal">Journal · November 2023</div>
+        <div class="pub-journal">Malaysian Journal of Computational and Applied Mathematics · November 2023</div>
         <span class="pub-status status-published">● Published</span>
         &nbsp;<a href="https://doi.org/10.37934/mjcsm.12.1.84101" target="_blank" style="font-size:0.78rem; color: var(--gold);">DOI →</a>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-num">[2]</div>
+      <div>
+        <div class="pub-title">Data-Driven Insights Into Feature Engineering and Efficiency Prediction in Lead-Free Rb-Based Perovskite Solar Cells</div>
+        <div class="pub-authors"><strong>Mohammad Borhan Uddin</strong>, et al.</div>
+        <div class="pub-journal">International Journal of Energy Research (Wiley) · 2026 · Article ID: 8866920</div>
+        <span class="pub-status status-published">● Published</span>
+        &nbsp;<a href="https://doi.org/10.1155/er/8866920" target="_blank" style="font-size:0.78rem; color: var(--gold);">DOI →</a>
       </div>
     </div>
   </div>
@@ -940,20 +1107,11 @@
   <div class="pub-group fade-in">
     <div class="pub-group-title">Submitted / Under Review</div>
     <div class="pub-item">
-      <div class="pub-num">[2]</div>
-      <div>
-        <div class="pub-title">Machine Learning-Assisted Optimization of Multilayered Perovskite Solar Cells</div>
-        <div class="pub-authors"><strong>Mohammad Borhan Uddin</strong>, et al.</div>
-        <div class="pub-journal">Target journal · Submitted 2024–2025</div>
-        <span class="pub-status status-review">● Under Review</span>
-      </div>
-    </div>
-    <div class="pub-item">
       <div class="pub-num">[3]</div>
       <div>
         <div class="pub-title">First-Principles Analysis of Optoelectronic Properties in Perovskite Compounds for Photovoltaic Applications</div>
         <div class="pub-authors"><strong>Mohammad Borhan Uddin</strong>, et al.</div>
-        <div class="pub-journal">Target journal · Under Review / In Preparation 2025</div>
+        <div class="pub-journal">Target journal · Under Review 2025</div>
         <span class="pub-status status-review">● Under Review</span>
       </div>
     </div>
@@ -969,7 +1127,7 @@
   </div>
 
   <p style="font-size: 0.82rem; color: var(--ink-muted); font-style: italic;">
-    * Full author lists, journal names, and DOIs will be updated upon acceptance. Preprints and abstracts available on request.
+    * Full author lists will be updated shortly. Preprints and abstracts available on request — please use the Contact page.
   </p>
 </section></div>
 
@@ -982,9 +1140,9 @@
     <div class="about-text fade-in">
       <p>I am a Materials Science and Engineering graduate from Khulna University of Engineering and Technology (KUET), Bangladesh, where I ranked 16th in my cohort of 65 students. My academic journey was defined by a growing fascination with the materials physics underlying next-generation solar energy technologies — a thread that runs from my undergraduate thesis through my current research manuscripts.</p>
 
-      <p>Since graduating, I have worked as a Production Engineer at Bangladesh Steel Re-Rolling Mills Limited in Chattogram, operating and optimizing a 58-ton induction furnace in an industrial steel melting environment. While this sits outside the solar cell domain, it has given me an irreplaceable understanding of how materials behave under real process constraints — knowledge that I believe is essential for any researcher serious about translating lab-scale breakthroughs into manufacturable technologies.</p>
+      <p>Since graduating, I have worked at Bangladesh Steel Re-Rolling Mills Limited, progressing to Senior Production Engineer (effective July 2026), in Chattogram, operating and optimizing a 58-ton induction furnace in an industrial steel melting environment. While this sits outside the solar cell domain, it has given me an irreplaceable understanding of how materials behave under real process constraints — knowledge that I believe is essential for any researcher serious about translating lab-scale breakthroughs into manufacturable technologies.</p>
 
-      <p>In parallel with my industry role, I have continued active research: co-authoring a published study on Al-Sn-Cu alloy microstructure, leading a machine learning-assisted perovskite optimization study, and contributing to a first-principles optoelectronic characterization project. Three manuscripts from this work are currently under review.</p>
+      <p>In parallel with my industry role, I have continued active research: co-authoring a published study on Al-Sn-Cu alloy microstructure, leading a machine learning-assisted perovskite optimization study (now published in <em>International Journal of Energy Research</em>), and contributing to a first-principles optoelectronic characterization project. Two further manuscripts from this work are currently under review.</p>
 
       <p>I am now seeking PhD or thesis-based Masters positions in photovoltaics, computational materials science, or related fields — particularly in North America and Europe — where I can pursue the stability and scalability challenges that I believe will define the next decade of perovskite solar cell research.</p>
 
@@ -1077,6 +1235,308 @@
 </footer>
 
 <!-- ── JS ────────────────────────────────────── -->
+<!-- ── Modals ─────────────────────────────────── -->
+
+<!-- Modal 1: Perovskite Material Properties -->
+<div class="modal-overlay" id="modal-1">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-label">Research Interest 01</div>
+        <div class="modal-title">Perovskite Material Properties</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">What I have done</div>
+        <p>My BSc thesis was a numerical investigation into the optoelectronic behaviour of a nanoparticle-interlayered perovskite solar cell, built and simulated in <strong>SCAPS-1D</strong>. I modelled the band alignment, carrier transport, and recombination dynamics of the perovskite absorber layer under varying material parameters — including bandgap tuning, carrier mobility, and defect density — to understand how material-level choices translate into device-level performance.</p>
+        <p>In a separate collaborative study, I performed <strong>first-principles DFT calculations</strong> (using VESTA and related tools) to probe the electronic band structure, density of states, and optical absorption spectra of candidate perovskite compounds. These atomistic insights were then integrated into a device simulation framework, establishing a multiscale workflow from quantum-level properties to macroscopic photovoltaic output.</p>
+      </div>
+
+      <!-- SVG Diagram 1: Multiscale workflow -->
+      <div class="modal-section">
+        <div class="modal-section-title">Methodology overview</div>
+        <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <!-- Background -->
+          <rect width="560" height="180" rx="6" fill="#f8f6f1"/>
+          <!-- Step boxes -->
+          <rect x="14" y="50" width="110" height="80" rx="5" fill="#1E2D5A"/>
+          <rect x="154" y="50" width="110" height="80" rx="5" fill="#1E2D5A"/>
+          <rect x="294" y="50" width="110" height="80" rx="5" fill="#1E2D5A"/>
+          <rect x="434" y="50" width="110" height="80" rx="5" fill="#8B6400"/>
+          <!-- Arrows -->
+          <path d="M124 90 L154 90" stroke="#D6D0C0" stroke-width="2" marker-end="url(#arr1)"/>
+          <path d="M264 90 L294 90" stroke="#D6D0C0" stroke-width="2" marker-end="url(#arr1)"/>
+          <path d="M404 90 L434 90" stroke="#D6D0C0" stroke-width="2" marker-end="url(#arr1)"/>
+          <defs>
+            <marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#D6D0C0"/>
+            </marker>
+          </defs>
+          <!-- Labels inside boxes -->
+          <text x="69" y="83" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">DFT /</text>
+          <text x="69" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">First-Principles</text>
+          <text x="69" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="rgba(255,255,255,0.7)">VESTA · Band gap</text>
+          <text x="209" y="83" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Optoelectronic</text>
+          <text x="209" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Properties</text>
+          <text x="209" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="rgba(255,255,255,0.7)">DOS · Absorption</text>
+          <text x="349" y="83" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Device</text>
+          <text x="349" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Simulation</text>
+          <text x="349" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="rgba(255,255,255,0.7)">SCAPS-1D · SETFOS</text>
+          <text x="489" y="83" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">PCE</text>
+          <text x="489" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Output</text>
+          <text x="489" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="rgba(255,200,100,0.9)">22% Achieved</text>
+          <!-- Title -->
+          <text x="280" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#4A4840">Multiscale Modelling Workflow</text>
+          <!-- Step labels -->
+          <text x="69" y="148" text-anchor="middle" font-family="monospace" font-size="8" fill="#7A7670">Step 1</text>
+          <text x="209" y="148" text-anchor="middle" font-family="monospace" font-size="8" fill="#7A7670">Step 2</text>
+          <text x="349" y="148" text-anchor="middle" font-family="monospace" font-size="8" fill="#7A7670">Step 3</text>
+          <text x="489" y="148" text-anchor="middle" font-family="monospace" font-size="8" fill="#7A7670">Result</text>
+        </svg>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Key tools & methods</div>
+        <div class="modal-tags">
+          <span class="modal-tag">SCAPS-1D</span>
+          <span class="modal-tag">DFT</span>
+          <span class="modal-tag">VESTA</span>
+          <span class="modal-tag">SETFOS</span>
+          <span class="modal-tag">Band Structure Analysis</span>
+          <span class="modal-tag">Optical Absorption</span>
+          <span class="modal-tag">Carrier Transport Modelling</span>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Output</div>
+        <p>One manuscript from the first-principles study is currently <strong>under review</strong>. The SCAPS-1D thesis work contributed to an <strong>achieved PCE of 22%</strong> in the simulated device model.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Key Factors Governing PV Performance -->
+<div class="modal-overlay" id="modal-2">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-label">Research Interest 02</div>
+        <div class="modal-title">Key Factors Governing Photovoltaic Performance</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">What I have done</div>
+        <p>A central theme across my perovskite research has been understanding <strong>which device parameters most strongly determine efficiency</strong>. Using SCAPS-1D, I systematically varied defect density, trap state energy levels, carrier lifetimes, and absorber layer thickness in my thesis model to map out sensitivity relationships — identifying that interface trap density and absorber defect concentration were the highest-leverage parameters for the nanoparticle-interlayered architecture I studied.</p>
+        <p>In my machine learning-assisted study, I extended this analysis to a multilayer perovskite cell, using ML models trained on large simulation datasets to rank feature importance across a wider parameter space. This revealed non-linear interactions between ETL/HTL properties and absorber layer defects that conventional parameter sweeps would not have captured efficiently.</p>
+      </div>
+
+      <!-- SVG Diagram 2: Parameter influence map -->
+      <div class="modal-section">
+        <div class="modal-section-title">Key performance-governing parameters</div>
+        <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <rect width="560" height="200" rx="6" fill="#f8f6f1"/>
+          <!-- Central node -->
+          <ellipse cx="280" cy="100" rx="58" ry="34" fill="#1E2D5A"/>
+          <text x="280" y="96" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">PCE / J-V</text>
+          <text x="280" y="111" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Parameters</text>
+          <!-- Satellite nodes -->
+          <rect x="12" y="30" width="118" height="36" rx="4" fill="#8B6400"/>
+          <text x="71" y="51" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white">Defect &amp; Trap Density</text>
+          <rect x="12" y="134" width="118" height="36" rx="4" fill="#8B6400"/>
+          <text x="71" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white">Layer Thickness</text>
+          <rect x="430" y="30" width="118" height="36" rx="4" fill="#2C3E6B"/>
+          <text x="489" y="51" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white">Carrier Lifetime</text>
+          <rect x="430" y="134" width="118" height="36" rx="4" fill="#2C3E6B"/>
+          <text x="489" y="151" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white">Interface</text>
+          <text x="489" y="164" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white">Recombination</text>
+          <!-- Connecting lines -->
+          <line x1="130" y1="48" x2="222" y2="82" stroke="#D6D0C0" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="130" y1="152" x2="222" y2="118" stroke="#D6D0C0" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="430" y1="48" x2="338" y2="82" stroke="#D6D0C0" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="430" y1="152" x2="338" y2="118" stroke="#D6D0C0" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <!-- High leverage label -->
+          <text x="71" y="22" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#8B6400">★ Highest leverage</text>
+          <text x="489" y="22" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#4A4840">Also significant</text>
+          <text x="280" y="185" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="#7A7670">Parameter sensitivity mapping via SCAPS-1D &amp; ML feature importance</text>
+        </svg>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Key tools & methods</div>
+        <div class="modal-tags">
+          <span class="modal-tag">SCAPS-1D</span>
+          <span class="modal-tag">Defect Modelling</span>
+          <span class="modal-tag">Trap Density Analysis</span>
+          <span class="modal-tag">Machine Learning</span>
+          <span class="modal-tag">Feature Importance</span>
+          <span class="modal-tag">Sensitivity Analysis</span>
+          <span class="modal-tag">Python</span>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Output</div>
+        <p>The ML-assisted parameter study is currently <strong>under review</strong> as a journal manuscript. Findings from the thesis parametric analysis were presented as part of the BSc thesis defence.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Device Architecture & Optimization -->
+<div class="modal-overlay" id="modal-3">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-label">Research Interest 03</div>
+        <div class="modal-title">Device Architecture &amp; Parameter Optimization</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">What I have done</div>
+        <p>My BSc thesis focused specifically on <strong>optimising a nanoparticle-enhanced perovskite device architecture</strong> — evaluating silver nanoparticle interlayers as a strategy to improve light trapping and carrier extraction. I tested multiple ETL/HTL material combinations and interlayer configurations in SCAPS-1D, ultimately identifying an architecture that achieved a simulated <strong>PCE of 22%</strong>.</p>
+        <p>In the follow-on machine learning study, I applied supervised ML algorithms (trained on SCAPS-1D simulation outputs) to optimise a multilayer perovskite cell architecture across a far larger parameter space than manual simulation would allow. The ML model was used to predict optimal ETL/HTL thickness combinations and interlayer properties, substantially accelerating the optimisation process.</p>
+      </div>
+
+      <!-- SVG Diagram 3: Device stack architecture -->
+      <div class="modal-section">
+        <div class="modal-section-title">Perovskite device architecture studied</div>
+        <svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <rect width="560" height="210" rx="6" fill="#f8f6f1"/>
+          <!-- Device stack layers -->
+          <rect x="120" y="18" width="220" height="24" rx="3" fill="#4A4840"/>
+          <text x="230" y="34" text-anchor="middle" font-family="monospace" font-size="9" fill="white">Metal Contact (Au)</text>
+          <rect x="120" y="46" width="220" height="22" rx="3" fill="#2C3E6B"/>
+          <text x="230" y="61" text-anchor="middle" font-family="monospace" font-size="9" fill="white">HTL (Spiro-OMeTAD)</text>
+          <rect x="120" y="72" width="220" height="18" rx="3" fill="#C49A1A" opacity="0.85"/>
+          <text x="230" y="85" text-anchor="middle" font-family="monospace" font-size="8.5" fill="white">Ag Nanoparticle Interlayer ★</text>
+          <rect x="120" y="94" width="220" height="34" rx="3" fill="#1E2D5A"/>
+          <text x="230" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold">Perovskite Absorber</text>
+          <rect x="120" y="132" width="220" height="18" rx="3" fill="#C49A1A" opacity="0.85"/>
+          <text x="230" y="145" text-anchor="middle" font-family="monospace" font-size="8.5" fill="white">Ag Nanoparticle Interlayer ★</text>
+          <rect x="120" y="154" width="220" height="22" rx="3" fill="#2C3E6B"/>
+          <text x="230" y="169" text-anchor="middle" font-family="monospace" font-size="9" fill="white">ETL (TiO₂ / SnO₂)</text>
+          <rect x="120" y="180" width="220" height="22" rx="3" fill="#4A4840"/>
+          <text x="230" y="195" text-anchor="middle" font-family="monospace" font-size="9" fill="white">TCO (FTO Glass)</text>
+          <!-- Sunlight arrow -->
+          <text x="55" y="30" font-family="monospace" font-size="9" fill="#8B6400">☀ Light</text>
+          <path d="M90 30 L115 30" stroke="#8B6400" stroke-width="1.5" marker-end="url(#arr2)"/>
+          <defs>
+            <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#8B6400"/>
+            </marker>
+          </defs>
+          <!-- PCE result -->
+          <rect x="370" y="85" width="162" height="42" rx="4" fill="#1E2D5A"/>
+          <text x="451" y="103" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="white">Optimised PCE</text>
+          <text x="451" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#C49A1A" font-weight="bold">22%</text>
+          <line x1="340" y1="106" x2="370" y2="106" stroke="#D6D0C0" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <!-- Legend -->
+          <rect x="370" y="140" width="12" height="10" rx="2" fill="#C49A1A" opacity="0.85"/>
+          <text x="387" y="150" font-family="monospace" font-size="8" fill="#4A4840">Novel interlayer (thesis)</text>
+        </svg>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Key tools & methods</div>
+        <div class="modal-tags">
+          <span class="modal-tag">SCAPS-1D</span>
+          <span class="modal-tag">SETFOS</span>
+          <span class="modal-tag">ETL/HTL Selection</span>
+          <span class="modal-tag">Nanoparticle Interlayers</span>
+          <span class="modal-tag">ML-Assisted Optimisation</span>
+          <span class="modal-tag">Python</span>
+          <span class="modal-tag">Device Simulation</span>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Output</div>
+        <p>Thesis achieved <strong>22% PCE</strong> in the optimised nanoparticle architecture. The ML optimisation study has been <strong>published</strong> in the <em>International Journal of Energy Research</em> (Wiley, 2026).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4: Scalability & Manufacturability -->
+<div class="modal-overlay" id="modal-4">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-label">Research Interest 04</div>
+        <div class="modal-title">Scalability, Longevity &amp; Manufacturability</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">What I have done</div>
+        <p>While my computational research focuses on efficiency optimisation, my <strong>three years as a Production Engineer (now Senior Production Engineer)</strong> at Bangladesh Steel Re-Rolling Mills have given me an industrial lens that directly informs how I think about scalability. Operating and optimising a 58-ton induction furnace — where material composition, process temperature, and throughput all interact in real time — has taught me how far the distance truly is between a promising material result and a process that can be reliably reproduced at scale.</p>
+        <p>In my perovskite simulation work, I have incorporated <strong>working temperature as a variable</strong> in stability assessments, examining how thermal stress influences defect migration and device degradation pathways. This connects directly to the question of how perovskite cells perform outside of the controlled lab conditions in which they are typically characterised.</p>
+      </div>
+
+      <!-- SVG Diagram 4: Lab-to-scale gap -->
+      <div class="modal-section">
+        <div class="modal-section-title">The lab-to-manufacturing gap</div>
+        <svg viewBox="0 0 560 185" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <rect width="560" height="185" rx="6" fill="#f8f6f1"/>
+          <!-- Left side: Lab -->
+          <rect x="14" y="30" width="155" height="125" rx="5" fill="white" stroke="#D6D0C0" stroke-width="1.5"/>
+          <text x="91" y="52" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#1E2D5A" font-weight="bold">Laboratory</text>
+          <text x="91" y="70" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">✓ Controlled conditions</text>
+          <text x="91" y="85" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">✓ Small area devices</text>
+          <text x="91" y="100" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">✓ High efficiency (22%)</text>
+          <text x="91" y="115" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#8B6400">✗ Stability untested</text>
+          <text x="91" y="130" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#8B6400">✗ Not reproducible</text>
+          <text x="91" y="145" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#8B6400">✗ Costly materials</text>
+          <!-- Right side: Manufacturing -->
+          <rect x="391" y="30" width="155" height="125" rx="5" fill="white" stroke="#D6D0C0" stroke-width="1.5"/>
+          <text x="468" y="52" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#1E2D5A" font-weight="bold">Manufacturing</text>
+          <text x="468" y="70" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Thermal stability</text>
+          <text x="468" y="85" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Large-area uniformity</text>
+          <text x="468" y="100" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Long-term longevity</text>
+          <text x="468" y="115" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Low-cost fabrication</text>
+          <text x="468" y="130" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Encapsulation</text>
+          <text x="468" y="145" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A4840">→ Process control</text>
+          <!-- Gap bridge -->
+          <rect x="192" y="62" width="132" height="62" rx="5" fill="#1E2D5A"/>
+          <text x="258" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white" font-weight="bold">The Gap I</text>
+          <text x="258" y="103" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="white" font-weight="bold">Want to Close</text>
+          <text x="258" y="117" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#C49A1A">3 yrs industry insight</text>
+          <!-- Arrows -->
+          <path d="M169 93 L192 93" stroke="#D6D0C0" stroke-width="1.5" marker-end="url(#arr3)"/>
+          <path d="M324 93 L391 93" stroke="#D6D0C0" stroke-width="1.5" marker-end="url(#arr3)"/>
+          <defs>
+            <marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#D6D0C0"/>
+            </marker>
+          </defs>
+          <text x="280" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#7A7670">Bridging simulation insight with real-world manufacturing constraints</text>
+        </svg>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Industry experience relevance</div>
+        <div class="modal-tags">
+          <span class="modal-tag">Induction Furnace Operation</span>
+          <span class="modal-tag">Process Optimisation</span>
+          <span class="modal-tag">Materials at Scale</span>
+          <span class="modal-tag">Thermal Stability</span>
+          <span class="modal-tag">Quality Control</span>
+          <span class="modal-tag">TPM Implementation</span>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Output & direction</div>
+        <p>This is the area I most want to develop further at graduate level — combining computational stability modelling with experimental fabrication work, and bringing a manufacturing-aware perspective that is often missing in purely academic perovskite research. I see this as my strongest differentiator as a graduate applicant.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // Mobile nav toggle
   const toggle = document.getElementById('navToggle');
@@ -1104,6 +1564,28 @@
     navAs.forEach(a => {
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
     });
+  });
+
+  // Modal open/close
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+    }
   });
 </script>
 </body>
